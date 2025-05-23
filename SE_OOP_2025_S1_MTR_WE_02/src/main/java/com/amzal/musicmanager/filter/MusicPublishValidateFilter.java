@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.amzal.exceptions.InvalidGenreException;
 import com.amzal.exceptions.InvalidLanguageException;
@@ -30,6 +31,16 @@ public class MusicPublishValidateFilter extends HttpFilter{
         boolean valid = true;
         StringBuilder errorMsg = new StringBuilder();
 		
+        //Get artist details
+        HttpSession session = request.getSession(false);
+    	int artistId = -1;
+        String artistName = null;
+
+    	if (session != null) {
+    		artistId = (int) session.getAttribute("userId");
+    		artistName = (String) session.getAttribute("username");
+    	}
+        
         // Get form inputs
 		Integer musicId = 0;
 		try {
@@ -91,7 +102,7 @@ public class MusicPublishValidateFilter extends HttpFilter{
         
         if (!valid) {
         	
-        	Music music = new Music(musicId, title, genre, language, filePath);
+        	Music music = new Music(musicId, title, artistId, artistName, genre, language, filePath);
         	request.setAttribute("music", music); //Have to create this music object and pass it back to the publish form, otherwise error in loading the preview in the form
         	
             request.setAttribute("errorMsg", errorMsg.toString());

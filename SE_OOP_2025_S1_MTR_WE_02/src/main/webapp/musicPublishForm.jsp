@@ -8,6 +8,13 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<header>
+		UserId: <%=session.getAttribute("userId") %>
+		Username: <%=session.getAttribute("username") %>
+		Usertype: <%=session.getAttribute("usertype") %>
+	</header>
+	
+	
 	<%
 	    // Get the Music object from the request
 	    Music music = (Music) request.getAttribute("music");
@@ -33,7 +40,7 @@
             <input type="hidden" name="musicId" value="<%= music.getId()%>">
             <input type="hidden" name="title" value="<%= music.getTitle()%>">
             <input type="hidden" name="genre" value="<%= music.getGenre()%>">
-            <input type="hidden" name="language" value="<%= music.getLanguage()%>">
+            <input type="hidden" name="language" value="<%= music.getLanguage()%>"> 
 
 			<label for="albumName">Album Name (If album does'nt exit, new one will be created for you):</label><br>
             <input type="text" id="albumName" name="albumName" ><br><br>

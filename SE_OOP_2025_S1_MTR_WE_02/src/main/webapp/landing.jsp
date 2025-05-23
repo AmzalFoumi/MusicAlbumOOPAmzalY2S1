@@ -17,11 +17,15 @@
     %>
     
     <form method="post" action="setSession">
+    
+    	<label for="userId">User Id:</label>
+        <input type="number" id="userId" name="userId" ><br><br>
+    	
         <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br><br>
+        <input type="text" id="username" name="username" ><br><br>
 
         <label for="usertype">User Type:</label>
-        <select id="usertype" name="usertype" required>
+        <select id="usertype" name="usertype" >
             <option value="artist">artist</option>
             <option value="listener">listner</option>
         </select><br><br>

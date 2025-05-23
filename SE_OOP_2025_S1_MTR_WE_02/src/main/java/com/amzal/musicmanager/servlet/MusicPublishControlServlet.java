@@ -16,15 +16,38 @@ import com.amzal.musicmanager.dao.MusicDAOInterface;
 import com.amzal.musicmanager.model.Music;
 import com.amzal.musicmanager.model.PublishedMusic;
 
+
+/**
+ * Handles publishing of a music track by saving publication details such as region, price,
+ * release date, and optional album association.
+ *
+ * URL pattern: /musicPublishController
+ *
+ * Expects POST parameters: musicId, price, region, releaseDate, albumName.
+ * If albumName is provided, it checks if the album exists or creates it,
+ * then publishes the music with the associated details.
+ */
 @WebServlet("/musicPublishController")
 public class MusicPublishControlServlet extends HttpServlet {
 
+	
+	/**
+     * Processes POST requests to publish music.
+     *
+     * Retrieves music and album details, creates or updates album if needed,
+     * and attempts to publish the music. Forwards to success or retry page based on result.
+     *
+     * @param request  the HTTP request containing publication details
+     * @param response the HTTP response used to forward or redirect
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException      if an I/O error occurs
+     */
 	protected void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
 		int musicId = Integer.parseInt(request.getParameter("musicId"));
-		String title = request.getParameter("title");
-	    String genre = request.getParameter("genre");
-	    String language = request.getParameter("language");
+//		String title = request.getParameter("title");
+//	    String genre = request.getParameter("genre");
+//	    String language = request.getParameter("language");
 		
 		Double price = Double.parseDouble(request.getParameter("price"));
 	    String region = request.getParameter("region");

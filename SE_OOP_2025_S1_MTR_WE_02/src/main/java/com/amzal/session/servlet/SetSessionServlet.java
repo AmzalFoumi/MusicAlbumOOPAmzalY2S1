@@ -20,9 +20,18 @@ public class SetSessionServlet extends HttpServlet {
         String username = request.getParameter("username");
         String usertype = request.getParameter("usertype");
         
+        Integer userId = -1;
+		try {
+			userId = Integer.parseInt(request.getParameter("userId"));
+		} catch (NumberFormatException e) {
+			System.out.println("User ID input SetSessionServlet is not an integer value");
+			e.printStackTrace();
+		}
+        
         HttpSession session = request.getSession(true);
 	    session.setAttribute("username", username);
 	    session.setAttribute("usertype", usertype);
+	    session.setAttribute("userId", userId);
 	    response.sendRedirect("musicUploadForm.jsp");
 
 //        if (username != null && usertype != null && usertype.equals("artist")) {

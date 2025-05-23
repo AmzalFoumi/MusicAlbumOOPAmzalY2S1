@@ -8,6 +8,11 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<header>
+		UserId: <%=session.getAttribute("userId") %>
+		Username: <%=session.getAttribute("username") %>
+		Usertype: <%=session.getAttribute("usertype") %>
+	</header>
 	<%
 	    // Get the Music object from the request
 	    Music music = (Music) request.getAttribute("music");

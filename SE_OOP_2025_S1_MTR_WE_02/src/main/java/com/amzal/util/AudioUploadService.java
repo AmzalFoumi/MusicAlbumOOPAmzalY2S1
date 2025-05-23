@@ -17,6 +17,11 @@ import java.time.format.DateTimeFormatter;
  */
 public class AudioUploadService {
 
+	/*
+	 * To prevent instantiation
+	 */
+	private AudioUploadService () {}
+	
     /**
      * Handles the file upload part, saving the audio file to the server and
      * returning the relative file path. This method is static.

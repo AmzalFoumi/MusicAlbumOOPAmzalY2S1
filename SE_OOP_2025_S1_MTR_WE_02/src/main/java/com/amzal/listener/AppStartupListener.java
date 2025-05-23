@@ -33,10 +33,11 @@ public class AppStartupListener implements ServletContextListener {
      */
     @Override
     public void contextInitialized(ServletContextEvent sce) {
+    	System.out.println("Web app started");
+    	
     	// Load config.properties from WEB-INF
         ConfigManager.loadProperties(sce.getServletContext());
-        System.out.println("Config loaded on app startup\n");
-        System.out.println("Web app started");
+        System.out.println("Database Config loaded on app startup\n");      
     }
 
     

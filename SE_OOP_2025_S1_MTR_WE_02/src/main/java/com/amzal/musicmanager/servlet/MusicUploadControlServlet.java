@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import com.amzal.musicmanager.dao.MusicDAO;
@@ -19,12 +20,40 @@ import com.amzal.musicmanager.dao.MusicDAOInterface;
 import com.amzal.musicmanager.model.Music;
 import com.amzal.util.AudioUploadService;
 
-
+/**
+ * Handles uploading of a music file and saving its metadata to the database.
+ *
+ * URL pattern: /musicUploadController
+ *
+ * Expects multipart POST request with fields: title, genre, language, audioFile, actionValue.
+ * Uses session attributes to get artist ID and name. Calls AudioUploadService to store the file.
+ * Redirects to preview page on success or reloads the form on failure.
+ */
 @WebServlet("/musicUploadController")
 @MultipartConfig // Enables file upload support
 public class MusicUploadControlServlet extends HttpServlet {
+	
+	/**
+     * Processes POST request to upload music and save metadata.
+     *
+     * @param request  HTTP request containing music metadata and audio file
+     * @param response HTTP response used to forward or redirect
+     * @throws IOException if file upload or redirect fails
+     * @throws ServletException if a servlet-specific error occurs
+     */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, UnsupportedEncodingException {
-	    String title = request.getParameter("title");
+	    
+		//Get artist details
+        HttpSession session = request.getSession(false);
+    	int artistId = -1;
+        String artistName = null;
+
+    	if (session != null) {
+    		artistId = (int) session.getAttribute("userId");
+    		artistName = (String) session.getAttribute("username");
+    	}
+		
+		String title = request.getParameter("title");
 	    String genre = request.getParameter("genre");
 	    String language = request.getParameter("language");
 	    
@@ -42,7 +71,7 @@ public class MusicUploadControlServlet extends HttpServlet {
         String filePath = AudioUploadService.handleAudioUpload(filePart, servletContext, originalFileName);
 
 	
-	    Music music = new Music(title, genre, language, filePath); //Constructor of music object
+	    Music music = new Music(title, artistId, artistName, genre, language, filePath); //Constructor of music object
 	    
 	    MusicDAOInterface DAO = MusicDAO.getMusicDAO();
 	    int saveReturn = DAO.save(music);

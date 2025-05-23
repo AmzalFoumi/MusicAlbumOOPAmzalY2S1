@@ -9,6 +9,6 @@ public final class AppConstants {
     
     // Prevent instantiation
     private AppConstants() {
-        throw new AssertionError("Constants class should not be instantiated");
+        
     }
 }

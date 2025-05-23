@@ -7,6 +7,13 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+	<header>
+		UserId: <%=session.getAttribute("userId") %>
+		Username: <%=session.getAttribute("username") %>
+		Usertype: <%=session.getAttribute("usertype") %>
+	</header>
+	
 	<h2>Upload Music Feature</h2>
 
 
